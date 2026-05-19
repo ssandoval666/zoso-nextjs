@@ -1,12 +1,13 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Home, Edit, Trash2, Plus, X, Image as ImageIcon, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { type Product } from "@/components/ProductCarousel";
 
 export default function AdminPage() {
 
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -109,6 +110,17 @@ export default function AdminPage() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    } finally {
+      router.push("/");
+      router.refresh();
+    }
+  };
+
   if (isLoading) return <div className="p-8 text-center min-h-screen text-foreground">Cargando productos...</div>;
 
   return (
@@ -116,8 +128,8 @@ export default function AdminPage() {
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <span className="text-2xl font-semibold">Administración Zoso</span>
-          <Button asChild variant="ghost" size="icon" className="rounded-full hover:bg-accent">
-            <Link href="/"><Home className="h-5 w-5" /></Link>
+          <Button onClick={handleLogout} variant="ghost" size="icon" title="Cerrar sesión" className="rounded-full hover:bg-accent">
+            <Home className="h-5 w-5" />
           </Button>
         </div>
       </header>
