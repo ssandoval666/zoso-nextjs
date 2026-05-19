@@ -2,29 +2,17 @@ import { Heart, Sparkles, Hand } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductCarousel, type Product } from "@/components/ProductCarousel";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { getProductsFromDrive } from "@/app/api/products/route";
 
 export const metadata = {
   title: "Zoso Design — Joyería artesanal hecha a mano",
   description: "Cadenitas, pulseras y anillos únicos hechos a mano con amor.",
 };
 
-async function getProducts(): Promise<Product[]> {
-  const API_URL = process.env.NEXT_PUBLIC_SITE_URL 
-    ? `${process.env.NEXT_PUBLIC_SITE_URL}/api/products` 
-    : "http://localhost:3000/api/products";
-    
-  try {
-    const response = await fetch(API_URL, { cache: 'no-store' });
-    if (!response.ok) return [];
-    return (await response.json()) as Product[];
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const products = await getProducts();
+  const products = (await getProductsFromDrive()) as Product[];
   const WHATSAPP_NUMBER = "5491158803730";
   const generalWa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     "¡Hola Zoso Design! 💖 Me gustaría conocer más sobre sus productos."
