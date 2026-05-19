@@ -18,7 +18,7 @@ const auth = new google.auth.GoogleAuth({
 
 const drive = google.drive({ version: 'v3', auth });
 
-async function getProductsFromDrive() {
+export async function getProductsFromDrive() {
   if (!GOOGLE_DRIVE_FILE_ID) {
     console.error('⚠️ ID de Google Drive no configurado.');
     return [];
