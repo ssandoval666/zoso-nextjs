@@ -1,4 +1,5 @@
 import { Heart, Sparkles, Hand } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ProductCarousel, type Product } from "@/components/ProductCarousel";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
@@ -13,19 +14,68 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const products = (await getProductsFromDrive()) as Product[];
-  const WHATSAPP_NUMBER = "5491158803730";
-  const generalWa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "¡Hola Zoso Design! 💖 Me gustaría conocer más sobre sus productos."
-  )}`;
+  const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
+  const WHATSAPP_MESSAGE = process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE_GENERAL || "";
+  const generalWa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
   return (
     <div className="min-h-screen overflow-hidden">
+      <style>{`
+        @keyframes slideAndSpinFromRight {
+          0%, 30% {
+            transform: translateX(0) scale(1) rotate(0deg);
+            opacity: 0.85;
+          }
+          50% {
+            transform: translateX(calc(-50vw + 100%)) scale(1) rotate(-360deg);
+            opacity: 1;
+          }
+          51% {
+            transform: translateX(calc(-50vw + 100%)) scale(1.5) rotate(-360deg);
+            opacity: 0;
+          }
+          51.1% {
+            transform: translateX(0) scale(1.5) rotate(0deg);
+            opacity: 0;
+          }
+          65%, 100% {
+            transform: translateX(0) scale(1) rotate(0deg);
+            opacity: 0.85;
+          }
+        }
+        @keyframes slideAndSpinFromLeft {
+          0%, 30% {
+            transform: translateX(0) scale(1) rotate(0deg);
+            opacity: 0.85;
+          }
+          50% {
+            transform: translateX(calc(50vw - 100%)) scale(1) rotate(360deg);
+            opacity: 1;
+          }
+          51% {
+            transform: translateX(calc(50vw - 100%)) scale(1.5) rotate(360deg);
+            opacity: 0;
+          }
+          51.1% {
+            transform: translateX(0) scale(1.5) rotate(0deg);
+            opacity: 0;
+          }
+          65%, 100% {
+            transform: translateX(0) scale(1) rotate(0deg);
+            opacity: 0.85;
+          }
+        }
+        .animate-slide-spin-right {
+          animation: slideAndSpinFromRight 6s ease-in-out infinite;
+        }
+        .animate-slide-spin-left {
+          animation: slideAndSpinFromLeft 6s ease-in-out infinite;
+        }
+      `}</style>
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <a href="#top" className="flex items-center gap-2">
-            <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-primary text-primary-foreground shadow-soft">
-              <Sparkles className="h-5 w-5" />
-            </div>
+            <Image src="/logo.png" alt="Zoso Design Logo" width={40} height={40} />
             <span className="text-2xl text-foreground">Zoso Design</span>
           </a>
           <nav className="hidden gap-6 text-sm font-semibold text-muted-foreground md:flex">
@@ -46,6 +96,16 @@ export default async function Home() {
           <div className="absolute -top-10 left-10 h-40 w-40 rounded-full bg-primary/20 blur-3xl animate-float" />
           <div className="absolute top-32 right-10 h-56 w-56 rounded-full bg-accent/30 blur-3xl animate-float" style={{ animationDelay: "2s" }} />
           <div className="absolute bottom-10 left-1/3 h-48 w-48 rounded-full bg-secondary/40 blur-3xl animate-float" style={{ animationDelay: "4s" }} />
+
+          {/* Logo animado derecho */}
+          <div className="absolute top-20 right-10 w-48 md:w-56 animate-slide-spin-right drop-shadow-xl">
+            <Image src="/logo.png" alt="Logo Animado Derecho" width={224} height={224} className="w-full h-auto" />
+          </div>
+
+          {/* Logo animado izquierdo */}
+          <div className="absolute top-20 left-10 w-48 md:w-56 animate-slide-spin-left drop-shadow-xl">
+            <Image src="/logo.png" alt="Logo Animado Izquierdo" width={224} height={224} className="w-full h-auto" />
+          </div>
         </div>
 
         <div className="relative mx-auto max-w-6xl px-4 py-4 text-center md:py-6">

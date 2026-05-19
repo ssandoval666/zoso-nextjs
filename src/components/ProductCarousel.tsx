@@ -22,7 +22,8 @@ export type Product = {
   imagePaths: string[];
 };
 
-const WHATSAPP_NUMBER = "5491158803730";
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
+const PRODUCT_MESSAGE_TEMPLATE = process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE_PRODUCT || '';
 
 /**
  * Lazy image: solo monta el <img> cuando la tarjeta entra en viewport,
@@ -185,9 +186,10 @@ function ProductImages({ images, name }: { images?: string[]; name: string }) {
 
 function ProductCard({ product }: { product: Product }) {
   const waUrl = useMemo(() => {
-    const message = encodeURIComponent(
-      `¡Hola Zoso Design! 💖 Me interesa el producto "${product.name}" (${product.price}). ¿Está disponible?`
-    );
+    const rawMessage = PRODUCT_MESSAGE_TEMPLATE
+      .replace("{name}", product.name)
+      .replace("{price}", product.price);
+    const message = encodeURIComponent(rawMessage);
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
   }, [product.name, product.price]);
 
