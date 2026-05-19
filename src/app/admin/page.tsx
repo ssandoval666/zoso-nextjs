@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { type Product } from "@/components/ProductCarousel";
 
 export default function AdminPage() {
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
