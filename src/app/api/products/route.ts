@@ -4,9 +4,9 @@ import { google } from 'googleapis';
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
 
-const GOOGLE_DRIVE_FILE_ID = '1sLOwMpyxNvtV4fwUC0DDgGZrTvErpKTq';
-const CLIENT_EMAIL = 'zosodesign@my-project-1543264584169.iam.gserviceaccount.com';
-const PRIVATE_KEY = '-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDIJcaCtcCcpPQI\ns/wpKCZ0hZRvBHMihYnyfRZUjkVs8neeF5wmJ08HEsY3iiFsWOUadPxLmDCsaej2\n4Oq3Sk+2gJJOI+N3iuuhgfjYebul5VwZtD9Mhe1RyR/PNaVLYMquGig6ZtjTnnNs\n7pUdO4ZKkPu3qNZazkLesumJksvnEsaNmdnqKAkFHCdUpgNgyvS1KZF4v5spFWq3\n/32p1b8mEd8IhTrh/tohuYF3z94S13pA9skNK+PgTNVBNWh82jPZ6BK7T1QcOS+E\nIJX+JrBPGynk1X/+B9IZrvveY2Cxy0wAiVKVoEEiA4VsXnZ2F+ACkVnAdUh9HbyV\nQj54HVBvAgMBAAECggEABf7vtZG5UL5pgYTWz7egTORSWbyoSe2QABL6oyzVH2bo\ng3SeNmkxQMgX5qkKLrAMQpPxM1iLUlbxf8sMIDjz+2BadOHPwJCJiSYwhleoC4rv\nJkv6i3g41eoXCSku9JU6041jQCCkBTu3DH/dn4MQsLvE9q/Y2atZ+hVVBRlZmpuT\ntMsuX533TCfgPt1/CkoKyW0baaudiUP5z/i1UETMGFKFPKEK2/KeG/kx8GqsOcBm\ntXT1a8D3y7K2i+2NbZNmiu445HH1sYq16Vi9/YBBLw4kp+OthCOACeGbpqcyI7i2\nlmtPU6jtG/rXNNQfXEc+e7q2FBZZnHST3w7aInhtpQKBgQDtzW90WjZJjyydBZl7\nB25lGZb+rpr3O0XaFA3CulidgH9mnSUVH4T2o0nChExdEF4909L2A0cD5uZa9PDZ\nxZ+8Wn50vpS3FWqu6u/nzYMI/spQrJ8b8kLaHRnPzGSmH3hOePbpL+mnC+aOeW4p\nHs5n8QaZ/kfZD825jGIVXTTGFQKBgQDXdq2MzDTpSa8S7cvvc9VmJZ6/Ovs2tun1\nmOkMSl8AnaEUZtqJHsVnmI24t4gP6rm/GSvYrtr1ZvSCOG9pB0/V8ztgfDhb69qb\n3nykdQLoTNgGctUn/3v6UrbL1R8h4SPCy+XlavK64R1y6tZoVQfVlvKNvXQbuirf\nXhw7wulBcwKBgH2ozBd4wC0YuiNzXQoVADHuVsrX601vhdbaN/dJTyBTUX8g1QKX\neER4PrbKACxBRPt43oZfbvxR3DH+MvNwqZr3WtFID/+7EnfB7+nWwEJVmQUOYrl6\nx/bH3+bdg+YAxSr6YscQKXC7KibpZdvWyo1EYQ+ovcCmyDgfRYkyinuNAoGAf6S+\nEeBUJDRTtGoN29CKhpYY4n8lnfdkyOuKfI5+k5XOfJCmPH9vQP0eUGTiBVPwMGbQ\nE/EapDEW/yJB1j3PrRcIgRN2K/agrqByxNbRHx+PBtr2rlhrcROZWU3rwJ1pGxjC\nHFRscgu074Rx+qMNHhrrnM60v0xd47AUF89TckMCgYB2XjYrBhfU6GprKV273m+d\nOkbHR1GFDj2Le6WOVAyPIbL4I03y6MeMOOTP8P/HRT4kHZ882bU28zb7mLvr6Jkv\nQS0glbV8JzyuCqOgR87sL54PFfLxg/MDtd38L3sD/Wum69/41fqRT1aHBPcS4JlT\n0JVidxy/KPDj6hgdg8ETjg==\n-----END PRIVATE KEY-----\n';
+const GOOGLE_DRIVE_FILE_ID = process.env.GOOGLE_DRIVE_FILE_ID || '';
+const CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL || '';
+const PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY || '';
 
 const auth = new google.auth.GoogleAuth({
   credentials: {
