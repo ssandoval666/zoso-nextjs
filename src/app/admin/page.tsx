@@ -31,6 +31,36 @@ export default function AdminPage() {
       });
   }, []);
 
+  // Temporizador de inactividad
+  useEffect(() => {
+    let timeoutId: number | undefined;
+
+    const logout = async () => {
+      try {
+        await fetch("/api/auth/logout", { method: "POST" });
+      } catch (error) {
+        console.error("Error al cerrar sesión por inactividad", error);
+      } finally {
+        router.push("/");
+        router.refresh();
+      }
+    };
+
+    const resetTimer = () => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(logout, 3 * 60 * 1000); // 3 minutos (180,000 ms)
+    };
+
+    const events = ["mousemove", "keydown", "mousedown", "scroll", "touchstart"];
+    events.forEach((e) => window.addEventListener(e, resetTimer));
+    resetTimer(); // Iniciar el temporizador por primera vez
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      events.forEach((e) => window.removeEventListener(e, resetTimer));
+    };
+  }, [router]);
+
   const handleOpenModal = (product?: Product) => {
     if (product) {
       setEditingProduct(product);
